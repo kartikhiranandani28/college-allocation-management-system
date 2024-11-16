@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Home</title>
+    <link rel="stylesheet" href="{% static 'colleges/style.css' %}">
+</head>
+<body>
+    <div class="content-container">
+        <h1>Welcome, {{ request.user.username }}</h1>
+        <p>Welcome to the college dashboard. Here you can manage your information and more.</p>
+        <a href="{% url 'college_app:college_register' %}">Register College Information</a>
+        <a href="{% url 'college_app:college_logout' %}">Logout</a>
+    </div>
+</body>
+</html>

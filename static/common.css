@@ -1,0 +1,308 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: white;
+    color: #333;
+  }
+  
+  .container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .container_header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers content horizontally */
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .logo {
+    width: 70px; /* Adjust size as needed */
+    height: auto;
+    position: absolute; /* Positions it at the left edge */
+    left: 0;
+  }
+  
+  .title {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1; /* Ensures title takes up remaining space */
+  }
+  
+  /* Header Styles */
+  
+    header {
+      background-color: rgb(0, 0, 0);
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+  }
+  
+  
+  header h1 {
+    font-size: 1.6rem; /* Reduced font size */
+    margin: 0;
+  }
+  
+  /* Navigation Styles */
+  nav {
+    background-color: #F5F5F5;
+    /* background-image:linear-gradient(#7ce8ff,	#00acdf); */
+    padding: 10px 0;
+    margin-bottom: 20px; /* Space below navigation */
+  }
+  
+  nav ul {
+    list-style: none;
+    text-align: center;
+  }
+  
+  nav ul li {
+    display: inline-block; /* Inline block layout for list items */
+    margin: 0 15px; /* Space between items */
+  }
+  
+  nav ul li a {
+    color: #000000; /* White text for links */
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 15px; /* Padding for clickable area */
+    border-radius: 5px; /* Rounded corners */
+    transition: background 0.3s; /* Smooth background change */
+  }
+  
+  nav ul li a:hover {
+    background-color: #3e94ea; /* Darker Gray on hover */
+  }
+  /* Footer Styling */
+  footer {
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-left,
+  .footer-links {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .footer-social {
+    margin: auto;
+  }
+  
+  .footer-left p {
+    margin: 5px 0;
+  }
+  
+  .footer-links ul,
+  .footer-social ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links ul li,
+  .footer-social ul li {
+    margin: 5px 0;
+  }
+  
+  .footer-links ul li a,
+  .footer-social ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links ul li a:hover {
+    color: #f1c40f; /* Hover color for footer links */
+  }
+  
+  .footer-social ul {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .footer-social ul li a {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    color: white; /* White color for social media icons */
+    transition: color 0.3s ease;
+  }
+  
+  /* Social Media Hover Colors */
+  .footer-social ul li a:hover[href*="facebook"] .fab {
+    color: #3b5998; /* Facebook Blue on hover */
+  }
+  
+  .footer-social ul li a:hover[href*="x.com"] .fab {
+    color: #1DA1F2; /* X (formerly Twitter) Blue on hover */
+  }
+  
+  .footer-social ul li a:hover[href*="linkedin"] .fab {
+    color: #0077b5; /* LinkedIn Blue on hover */
+  }
+  
+  /* Footer Bottom Section */
+  .footer-bottom {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #dddddd;
+  }
+  
+  .footer-bottom p {
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  
+  /* Mobile (up to 480px) */
+  @media (max-width: 480px) {
+    .container_header {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+  
+    .logo {
+      position: relative;
+      left: auto;
+      margin-bottom: 10px;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    header h1 {
+      font-size: 1.4rem; /* Smaller font size for mobile */
+    }
+  
+    nav ul {
+      display: block;
+      padding: 0;
+    }
+  
+    nav ul li {
+      display: block;
+      margin: 5px 0;
+    }
+  
+    nav ul li a {
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+  
+  /* Tablet (481px to 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .container_header {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .logo {
+      width: 60px;
+    }
+  
+    .title {
+      font-size: 1.8rem;
+    }
+  
+    header h1 {
+      font-size: 1.6rem; /* Smaller font size for tablets */
+    }
+  
+    nav ul li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  
+    nav ul li a {
+      font-size: 1.1rem;
+      padding: 8px 12px;
+    }
+  }
+  
+  /* Laptop (769px to 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .container_header {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 10px 15px; /* Reduced padding for laptop */
+    }
+  
+    .logo {
+      width: 70px;
+    }
+  
+    .title {
+      font-size: 2rem;
+    }
+  
+    header h1 {
+      font-size: 1.8rem; /* Smaller font size for laptop */
+    }
+  
+    nav ul li {
+      display: inline-block;
+      margin: 0 15px;
+    }
+  
+    nav ul li a {
+      font-size: 1.1rem;
+      padding: 8px 15px;
+    }
+  }
+  
+  /* Desktop (1025px and above) */
+  @media (min-width: 1025px) {
+    .container_header {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 15px 30px; /* Reduced padding for desktop */
+    }
+  
+    .logo {
+      width: 80px;
+    }
+  
+    .title {
+      font-size: 2.2rem;
+    }
+  
+    header h1 {
+      font-size: 2rem; /* Adjusted font size */
+    }
+  
+    nav ul li {
+      display: inline-block;
+      margin: 0 20px;
+    }
+  
+    nav ul li a {
+      font-size: 1.2rem;
+      padding: 10px 20px;
+    }
+  }

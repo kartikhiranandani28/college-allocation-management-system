@@ -1,0 +1,365 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>COLLEGE MANTRA</title>
+  <link rel="stylesheet" href="{% static 'colleges/home.css' %}">
+  <link rel="stylesheet" href="{% static 'common.css' %}">
+ 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fa;
+      color: #333;
+    }
+
+    .container {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
+    header {
+      background-color: black;  /* Purple for Header */
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .container_header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .logo {
+      width: 80px;
+      height: auto;
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+
+    .title {
+      flex-grow: 1;
+      font-size: 2.4rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: #F5F5F5;
+      padding: 15px 0;
+      margin-bottom: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      text-align: center;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: #333;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #3e94ea;
+    }
+
+    /* Hero Section */
+    #hero {
+      background-color: #28a745;  /* Green color */
+      color: white;
+      text-align: center;
+      padding: 80px 20px; /* Adjust padding for space */
+    }
+
+    #hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    #hero p {
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+
+    /* Buttons and Sections */
+    .login-signup-section .container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 30px;
+      gap: 20px;
+    }
+
+    .action-item {
+      text-align: center;
+      width: 220px;
+    }
+
+    .action-item p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #2563EB;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(to right, #6a1b9a, #2563EB);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 100%;
+      max-width: 200px;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #8e24aa, #3e94ea);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: black;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-left,
+    .footer-links {
+      flex: 1;
+      margin: 10px;
+    }
+
+    .footer-social {
+      margin: auto;
+    }
+
+    .footer-left p {
+      margin: 5px 0;
+    }
+
+    .footer-links ul,
+    .footer-social ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links ul li,
+    .footer-social ul li {
+      margin: 5px 0;
+    }
+
+    .footer-links ul li a,
+    .footer-social ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links ul li a:hover {
+      color: #f1c40f;
+    }
+
+    .footer-social ul {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-social ul li a {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    /* Social Media Hover Colors */
+    .footer-social ul li a:hover[href*="facebook"] .fab {
+      color: #3b5998;
+    }
+
+    .footer-social ul li a:hover[href*="x.com"] .fab {
+      color: #1DA1F2;
+    }
+
+    .footer-social ul li a:hover[href*="linkedin"] .fab {
+      color: #0077b5;
+    }
+
+    /* Footer Bottom Section */
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #dddddd;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .container_header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo {
+        position: relative;
+        left: auto;
+        margin-bottom: 10px;
+      }
+
+      .title {
+        font-size: 1.5rem;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      nav ul {
+        display: block;
+        padding: 0;
+      }
+
+      nav ul li {
+        display: block;
+        margin: 5px 0;
+      }
+
+      nav ul li a {
+        font-size: 1rem;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container_header">
+        <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+        <h1 class="title">COLLEGE MANTRA</h1>
+    </div>
+</header>  
+
+<nav>
+    <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="{% url 'cm_app:about' %}">About</a></li>
+        <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
+        <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+    </ul>
+</nav>
+
+<!-- Hero Section (Green Color) -->
+<section id="hero">
+    <div class="container">
+        <h1>Welcome to COLLEGE MANTRA 2024</h1>
+        <p>Join the seat allocation process for IITs, NITs, and other top engineering institutes in India</p>
+    </div>
+</section>
+
+<!-- Login/Signup Section -->
+<section class="login-signup-section">
+    <div class="container">
+        <div class="action-item">
+            <p>Candidate Login</p>
+            <a href="{% url 'candidate_app:candidate_login' %}" class="btn">Login</a>
+        </div>
+        <div class="action-item">
+            <p>Candidate Signup</p>
+            <a href="{% url 'candidate_app:candidate_signup' %}" class="btn">Sign Up</a>
+        </div>
+        <div class="action-item">
+            <p>College Login</p>
+            <a href="{% url 'college_app:college_login' %}" class="btn">Login</a>
+        </div>
+        <div class="action-item">
+            <p>College Signup</p>
+            <a href="{% url 'college_app:college_signup' %}" class="btn">Sign Up</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-left">
+            <p>&copy; 2024 College Mantra. All rights reserved.</p>
+        </div>
+        <div class="footer-links">
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <ul>
+                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Developed by College Mantra Team</p>
+    </div>
+</footer>
+
+</body>
+</html>

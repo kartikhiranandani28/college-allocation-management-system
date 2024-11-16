@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Home | COLLEGE MANTRA</title>
+  <link rel="stylesheet" href="{% static 'colleges/home.css' %}">
+  <link rel="stylesheet" href="{% static 'common.css' %}">
+  <style>
+    .container_header {
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2em;
+  margin: 0;
+}
+
+.greeting {
+  font-size: 2.5em;
+  color: #f6cb40;
+}
+
+.student-home .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 0;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-item p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container_header">
+      <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+      <h1 class="title">COLLEGE MANTRA</h1>
+     
+    </div>
+  </header>
+
+  <section class="student-home">
+    
+    <div class="container">
+      <div class="action-item">
+        <h1 class="greeting">Hi {{ user.username }}</h1>
+      </div>
+    
+    
+    <div class="container">
+      <div class="container">
+        <div class="action-item">
+          <p>Home</p>
+          <a href="{% url 'candidate_app:candidate_home' %}" class="btn">Go</a>
+        </div>
+      <div class="action-item">
+        <p>Register/Update Your Details</p>
+        <a href="{% url 'candidate_app:candidate_register'  %}" class="btn">Go</a>
+      </div>
+      
+      <div class="action-item">
+        <p>Add and Update Your Preferences</p>
+        <a href="{% url 'candidate_app:college_course_view' %}" class="btn">Go</a>
+      </div>
+      <div class="action-item">
+        <p>Check Results</p>
+        <a href="#" class="btn">Go</a>
+      </div>
+      <div class="action-item">
+        <p>Logout</p>
+        <a href="{% url 'candidate_app:candidate_logout'  %}" class="btn">Go</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2024 COLLEGE MANTRA | All rights reserved</p>
+    </div>
+  </footer>
+
+</body>
+</html>

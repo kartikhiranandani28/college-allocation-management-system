@@ -1,0 +1,89 @@
+/* Hero Section */
+#hero {
+    background: url('josaa-hero.jpg') no-repeat center center/cover;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #77f3a8;
+  }
+  
+  #hero h1 {
+    font-size: 3em; /* Size of main hero title */
+  }
+  
+  #hero p {
+    font-size: 1.2em; /* Size of hero paragraph */
+  }
+  
+  #hero .btn {
+    background-color: #fff; /* Button background */
+    color: #2563EB; /* Button text color */
+    padding: 10px 20px; /* Button padding */
+    text-decoration: none;
+    margin-top: 20px; /* Space above button */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  /* Section Styles */
+  .section {
+    padding: 40px 0;
+    text-align: center;
+  }
+  
+  .section h2 {
+    font-size: 2em; /* Section title size */
+    margin-bottom: 20px; /* Space below section title */
+  }
+  
+  #dates .dates-list {
+    list-style: none; /* No bullet points */
+    margin: 0;
+    padding: 0; /* No padding */
+  }
+  
+  #dates .dates-list li {
+    margin-bottom: 15px; /* Space between list items */
+    font-size: 1.2em; /* Font size for list items */
+  }
+  
+  /* Announcement Styles */
+  .announcement {
+    background-color: #EBF2FF; /* Light blue background */
+    padding: 10px; /* Padding inside announcements */
+    margin: 20px 0; /* Space above and below announcements */
+    border-left: 4px solid #2563EB; /* Blue left border */
+  }
+  
+  .announcement h4 {
+    margin-bottom: 10px; /* Space below announcement title */
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #1E3A8A; /* Dark Blue */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0; /* Padding in footer */
+  }
+  
+  footer a {
+    color: #fff; /* White text for footer links */
+    text-decoration: none; /* No underline */
+  }
+  
+  /* Button Styles */
+  .btn {
+    display: inline-block; /* Button display */
+    background-color: #2563EB; /* Blue background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Padding for buttons */
+    text-decoration: none; /* No underline */
+    border-radius: 5px; /* Rounded corners */
+    margin-top: 10px; /* Space above button */
+  }
+  
+  .btn:hover {
+    background-color: #1E3A8A; /* Dark Blue on hover */
+  }
