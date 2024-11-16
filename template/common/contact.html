@@ -21,10 +21,13 @@
 
   <nav>
     <ul>
-      <li><a href="{% url 'cm_app:home' %}">Home</a></li>
+      <li><a href="">Home</a></li>
       <li><a href="{% url 'cm_app:about' %}">About</a></li>
       <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
-      <li><a href="#">Contact Us</a></li>
+      <li><a href="{% url 'cm_app:seat_matrix' %}">Seat Matrix</a></li>
+      <li><a href="{% url 'cm_app:important_dates' %}">Important Dates</a></li> 
+      <li><a href="{% url 'cm_app:announcements' %}">Announcements</a></li>
+      <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
     </ul>
   </nav>
 

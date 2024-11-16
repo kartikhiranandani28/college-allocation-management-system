@@ -21,6 +21,8 @@ def contact(request):
     return render(request,'common/contact.html')
 def option(request):
     return render(request,'common/register.html')
+def important_dates(request): return render(request, 'common/important_dates.html') 
+def announcements(request): return render(request, 'common/announcements.html')
 # def seat_matrix(request):
 #     return render(request,'common/seat_matrix.html')
 
