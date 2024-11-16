@@ -12,7 +12,7 @@ from django.http import JsonResponse
 
 from django.db import transaction
 def home(request):
-    return render(request,'colleges/common_home.html')
+    return render(request,'common/common_home.html')
 # About page view
 def about(request):
     return render(request, 'common/about.html')
@@ -22,7 +22,7 @@ def option(request):
     return render(request,'common/register.html')
 
 
-
+# def seat_matrix(request): 
 
 
 

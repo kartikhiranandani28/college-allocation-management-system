@@ -239,6 +239,21 @@ def college_course_view(request):
         'preferences': preferences
     })
 
+# @login_required(login_url='candidate_app:candidate_login')
+# def allocation_result(request):
+#     candidate_id = request.user.username
+
+#     query1 = '''
+#         SELECT 
+#         FROM College c
+#         JOIN College_Course cc ON c.College_ID = cc.College_ID
+#         JOIN Course co ON cc.Course_ID = co.Course_ID
+#         JOIN Preference p ON p.College_ID = c.College_ID AND p.Course_ID = co.Course_ID
+#         JOIN can_pref cp ON cp.Choice_ID = p.Choice_ID
+#         WHERE cp.username = %s
+#         ORDER BY p.Choice_No;
+#     '''
+
 # # Add preference view for candidates
 # @login_required(login_url='candidate_app:candidate_login')
 # def add_preference(request, college_id, course_id):
