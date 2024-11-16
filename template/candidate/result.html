@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allocation Result</title>
+    <link rel="stylesheet" href="result.css"> <!-- Link to external CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>College Allocation Result</h1>
+        </header>
+        
+        <!-- Student's Information -->
+        <div class="student-info">
+            <h2>Student Details</h2>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+        </div>
+
+        <!-- College Allocation Result -->
+        <div class="allocation-result">
+            <h2>Allocated College and Course</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>College Name</th>
+                        <th>Course Name</th>
+                        <th>College ID</th>
+                        <th>Course ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ allocated_college.name }}</td>
+                        <td>{{ allocated_college.course }}</td>
+                        <td>{{ allocated_college.college_id }}</td>
+                        <td>{{ allocated_college.course_id }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Allocation Status Message -->
+        <div class="status-message">
+            {% if allocation_status %}
+                <p class="success">{{ allocation_status }}</p>
+            {% else %}
+                <p class="error">Your allocation is not successful. Please contact the administration.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>
