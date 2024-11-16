@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seat Matrix</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/seat_matrix.css' %}">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+      /* Add some basic styles for the table */
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+      }
+      th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+      }
+      th {
+          background-color: #f2f2f2;
+      }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container_header">
+      <img src="logo.jpg" alt="College Mantra Logo" class="logo">
+      <h1 class="title">COLLEGE MANTRA</h1>
+    </div>
+  </header> 
+
+  <nav>
+    <ul>
+        <li><a href="{% url 'cm_app:home' %}">Home</a></li>
+        <li><a href="{% url 'cm_app:about' %}">About</a></li>
+        <li><a href="{% url 'cm_app:seat_matrix' %}">Seat Matrix</a></li>
+        <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
+        <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <h2>Seat Matrix</h2>
+      <p>Check the seat matrix for various institutes including IITs, NITs, and GFTIs.</p>
+      
+      <!-- Table to display seat matrix -->
+      <h3>Seat Matrix Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>College Name</th>
+            <th>Branch Name</th>
+            <th>Program Name</th>
+            <th>Total Seats</th>
+            <th>Allocated Seats</th>
+            <th>General Seats</th>
+            <th>OBC-NCL Seats</th>
+            <th>SC Seats</th>
+            <th>ST Seats</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in college_courses %}
+          <tr>
+            <td>{{ course.college_name }}</td>
+            <td>{{ course.branch_name }}</td>
+            <td>{{ course.program_name }}</td>
+            <td>{{ course.total_seats }}</td>
+            <td>{{ course.allocated_seats }}</td>
+            <td>{{ course.general }}</td>
+            <td>{{ course.obc_ncl }}</td>
+            <td>{{ course.sc }}</td>
+            <td>{{ course.st }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="9">No data available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>© 2024 COLLEGE MANTRA | All rights reserved</p>
+        <p>Content Owned and Managed by College Mantra (CM)</p>
+      </div>
+  
+      <div class="footer-links">
+        <ul>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/terms-conditions">Terms & Conditions</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-social">
+        <ul>
+          <li><a href="https://facebook.com/college-mantra" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+          <li><a href="https://x.com/college-mantra" target="_blank"><i class="fab fa-x"></i></a></li>
+          <li><a href="https://linkedin.com/college-mantra" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Powered by College Mantra | Designed with ❤️</p>
+    </div>
+  </footer>
+
+</body>
+</html>

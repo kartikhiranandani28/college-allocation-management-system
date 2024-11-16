@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allocation Result</title>
-    <link rel="stylesheet" href="result.css"> <!-- Link to external CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/result.css' %}"> <!-- Link to external CSS -->
 </head>
 <body>
 
@@ -16,8 +17,8 @@
         <!-- Student's Information -->
         <div class="student-info">
             <h2>Student Details</h2>
-            <p><strong>Name:</strong> {{ student.name }}</p>
-            <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+            <p><strong>Name:</strong> {{ candidate_name }}</p>
+            <p><strong>Roll No:</strong> {{ allocation.roll_no }}</p>
         </div>
 
         <!-- College Allocation Result -->
@@ -26,19 +27,27 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Choice No.</th>
                         <th>College Name</th>
                         <th>Course Name</th>
-                        <th>College ID</th>
-                        <th>Course ID</th>
+                        <th>Program Name</th>
+                        <th>Round Number</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% if allocation %}
                     <tr>
-                        <td>{{ allocated_college.name }}</td>
-                        <td>{{ allocated_college.course }}</td>
-                        <td>{{ allocated_college.college_id }}</td>
-                        <td>{{ allocated_college.course_id }}</td>
+                        <td>{{ allocation.choice_no }}</td>
+                        <td>{{ allocation.college_name }}</td>
+                        <td>{{ allocation.branch_name }}</td>
+                        <td>{{ allocation.program_name }}</td>
+                        <td>1</td>
                     </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">No allocation found.</td>
+                    </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

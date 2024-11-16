@@ -239,6 +239,73 @@ def college_course_view(request):
         'preferences': preferences
     })
 
+
+from django.shortcuts import render
+from django.db import connection
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.db import connection
+
+@login_required(login_url='candidate_app:candidate_login')
+def get_candidate_allocation(request):
+    # Initialize context for the template
+    context = {
+        'allocation_status': None,
+        'candidate_name': None,
+        'allocation': None,
+    }
+
+    # Define the SQL query with a placeholder
+    sql_query = """
+    SELECT 
+        c.Candidate_Name,
+        c.Roll_No,
+        p.Choice_No,
+        cl.College_Name,
+        co.Branch_Name,
+        co.Program_Name
+    FROM 
+        Can_Alloc ca
+    JOIN 
+        Allocation a ON ca.Allocation_ID = a.Allocation_ID
+    JOIN 
+        Preference p ON a.Allocation_ID = p.Choice_ID
+    JOIN 
+        College_Course cc ON p.College_ID = cc.College_ID AND p.Course_ID = cc.Course_ID
+    JOIN 
+        Course co ON cc.Course_ID = co.Course_ID
+    JOIN 
+        Candidate c ON ca.username = c.username
+    JOIN 
+        College cl ON cc.College_ID = cl.College_ID  -- Join College table
+    WHERE 
+        ca.username = %s;  -- Use a placeholder for the username
+    """
+
+    # Use a cursor to execute the SQL query
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query, [request.user.username])  # Pass the logged-in user's username
+        result = cursor.fetchall()  # Fetch all results
+
+        # Process the results
+        if result:
+            # Assuming there's only one result for a given username
+            candidate_name, roll_no,choice_no, college_name, branch_name, program_name = result[0]
+            context['candidate_name'] = candidate_name
+            context['allocation'] = {
+                'choice_no': choice_no,
+                'roll_no': roll_no,
+                'college_name': college_name,
+                'branch_name': branch_name,
+                'program_name': program_name,
+            }
+            context['allocation_status'] = 'Your allocation is successful!'
+        else:
+            context['allocation_status'] = 'No allocation found for the given username.'
+
+    # Render the template with the context
+    return render(request, 'candidate/result.html', context)
+
 # @login_required(login_url='candidate_app:candidate_login')
 # def allocation_result(request):
 #     candidate_id = request.user.username
