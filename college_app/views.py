@@ -26,11 +26,8 @@ def college_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            # Check if the user is associated with a College
-            if College.objects.filter(College_ID=user.username).exists():
-                return redirect("college_app:college_home")  # Redirect after successful login
-            else:
-                return redirect("college_app:college_login")
+            return redirect("college_app:college_home")  # Redirect after successful login
+           
         else:
             messages.error(request, 'Invalid credentials')
             return render(request, 'colleges/login.html')
@@ -65,7 +62,7 @@ def college_signup(request):
 # College logout view
 def college_logout(request):
     logout(request)
-    return redirect("college_login")
+    return redirect("cm_app:home")
 
 
 @login_required(login_url='college_app:college_login')  # Ensures the user is logged in before accessing this page
@@ -152,3 +149,33 @@ def college_list(request):
 # Home page for colleges
 def college_home(request):
     return render(request, 'colleges/home.html')
+
+def college_courses(request):
+    college_id=request.user.username
+    with connection.cursor() as cursor:
+        # Query to fetch courses offered by a specific college
+        cursor.execute("""
+            SELECT c.course_id, c.branch_name
+            FROM college_course cc
+            INNER JOIN course c ON cc.course_id = c.course_id
+            WHERE cc.college_id = %s
+        """, [college_id])
+        # Fetch all results
+        courses = [
+            {"course_id": row[0], "branch_name": row[1]}
+            for row in cursor.fetchall()
+        ]
+
+    # Query to get the college name
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT college_name
+            FROM college
+            WHERE college_id = %s
+        """, [college_id])
+        college_name = cursor.fetchone()[0]
+
+    return render(request, "colleges/college_courses.html", {
+        "college_name": college_name,
+        "courses": courses
+    })

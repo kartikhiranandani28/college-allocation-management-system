@@ -16,8 +16,51 @@
     margin: 0;
     box-sizing: border-box;
 }
-body{
-    background-color: #080710;
+    body {
+      font-size: 16px;
+      font-family: 'Arial', sans-serif;
+      background-color: #000000; /* Light gray background for better contrast */
+      margin: 0;
+      padding: 0;
+      color: #333; /* Darker text color for better readability */
+    }
+
+ /* Header Styles */
+header {
+  background-color: #000; /* Black background */
+  color: #fff;
+  padding: 1px 0; /* Further reduced padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures space between logo and heading */
+  height: 80px; /* Allows content to determine height */
+}
+
+.container_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center; /* Center the content in the header */
+}
+
+.logo {
+  width: 80px; /* Reduced logo size */
+  height: auto;
+  position: absolute; /* Position logo at the left edge */
+  left: 20px;
+  top:20px;
+}
+
+h1 {
+  font-family: 'Magnolia Script', cursive;
+  font-size: 2.0em; /* Reduced font size of the heading */
+  color: #fff;
+  margin-left: 80px; /* Adjust space after logo */
+  text-align: center; /* Ensure the heading is centered */
+}
+
+h1 span {
+  color: #00BAFF; /* Contrasting color for "Mantra" */
 }
 .background{
     width: 430px;
