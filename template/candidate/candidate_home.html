@@ -1,14 +1,14 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Home | COLLEGE MANTRA</title>
+  <title>Student Home</title>
   <link rel="stylesheet" href="{% static 'colleges/home.css' %}">
   <link rel="stylesheet" href="{% static 'css/common.css' %}">
   <style>
-        body {
+    body {
       font-size: 16px;
       font-family: 'Arial', sans-serif;
       background-color: #F4F4F9; /* Light gray background for better contrast */
@@ -443,22 +443,398 @@ footer a:hover {
       <h1 class="title">COLLEGE MANTRA</h1>
      
     </div>
-  </header>
+  </header> -->
+  {% load static %}
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>College Dashboard</title>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+      <!-- Add Font Awesome CDN for Social Media Icons -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <style>
+          /* General Body Styles */
+          body {
+              font-size: 16px;
+              font-family: 'Arial', sans-serif;
+              background-color: #CB9DF0;
+              margin: 0;
+              padding: 0;
+              color: #333;
+          }
+          /* Main Container */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.container1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
 
+/* Action Item Styling */
+.action-item {
+  background-color: #FFF6E3;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  margin: 10px;
+}
+.action-item1 {
+  background-color: #CB9DF0;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  text-align: center;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  transition: transform 0.3s ease;
+  margin: 10px;
+}
+
+/* .action-item:hover {
+  transform: translateY(-5px);
+} */
+
+/* Greeting Styling */
+.greeting {
+  font-size: 2.5em;
+  color: #3B1E54;
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+  background: none;  /* No background box */
+  padding: 0;  /* Remove padding */
+}
+
+/* Paragraph Styling */
+.action-item p {
+  font-size: 1.2em;
+  color: #005b69;
+  margin-bottom: 10px;
+}
+
+/* Button Styling */
+.btn {
+  background-color: #2563EB;
+  color: #fff;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 1.1em;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #00BAFF;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .action-item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+  
+          /* Header Styles */
+          header {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              background-color: #000;
+              color: white;
+              padding: 0 20px;
+              height: 80px;
+              position: relative; /* Required for centering the text */
+          }
+  
+          .logo {
+            width: 80px; /* Reduced logo size */
+            height: auto;
+            position: absolute; /* Position logo at the left edge */
+            left: 20px;
+            top:20px;
+          }
+  
+          header h1 {
+              margin: 0;
+              font-family: 'Magnolia Script', cursive;
+              font-size: 2.0em;
+              color: white;
+              position: absolute; /* Center the text using position absolute */
+              left: 50%;
+              transform: translateX(-50%);
+          }
+  
+          header h1 span {
+              color: #00BAFF;
+          }
+  
+          #log {
+              margin-left: auto;
+              font-size: 1.2em;
+          }
+  
+          #log a {
+              color: white;
+              text-decoration: none;
+          }
+  
+          #log a:hover {
+              color: #CB9DF0;
+          }
+  
+          /* Navigation Styles */
+          nav {
+              background-color: #000;
+              padding: 10px 0;
+              text-align: center;
+          }
+  
+          nav ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+          }
+  
+          nav ul li {
+              display: inline-block;
+              margin: 0 15px;
+          }
+  
+          nav ul li a {
+              color: #fff;
+              text-decoration: none;
+              font-size: 1.1em;
+          }
+  
+          nav ul li a:hover {
+              color: #CB9DF0;
+          }
+  
+          /* Main Content */
+          .main-content {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding: 2rem 1rem;
+              height: calc(100vh - 160px); /* Adjust for header and footer height */
+          }
+  
+          .welcome-section h1 {
+              font-size: 2.5rem;
+              margin-bottom: 0.5rem;
+              color: #6AD4DD;
+          }
+  
+          .welcome-section p {
+              font-size: 1.2rem;
+              margin-bottom: 2rem;
+              color: #555;
+          }
+  
+          /* Buttons */
+          .btn {
+              display: inline-block;
+              background-color: #6AD4DD;
+              color: #fff;
+              padding: 12px 24px;
+              text-decoration: none;
+              border-radius: 5px;
+              margin-top: 10px;
+              transition: background-color 0.3s ease, transform 0.3s ease;
+          }
+  
+          .btn:hover {
+              background-color: #CB9DF0;
+              transform: scale(1.05); /* Hover effect */
+          }
+  
+          /* Footer Styles */
+          footer {
+              background-color: #000; /* Black background */
+              color: #fff;
+              padding: 40px 50px; /* Increased padding for more space */
+              display: flex;
+              justify-content: center; /* Center horizontally */
+              align-items: center; /* Center vertically */
+              flex-direction: column; /* Stack items vertically */
+              text-align: center; /* Center text */
+          }
+  
+          footer .footer-content {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              margin-top: 20px;
+          }
+  
+          footer .footer-left,
+          footer .footer-links,
+          footer .footer-social {
+              flex: 1 1 auto;
+              padding: 10px;
+              margin: 10px 0;
+          }
+  
+          /* Footer Left Section (Copyright, etc.) */
+          footer .footer-left {
+              font-size: 1.2em;
+              margin-bottom: 20px;
+          }
+  
+          footer .footer-links {
+              margin-bottom: 20px;
+          }
+  
+          footer .footer-social {
+              margin-bottom: 20px;
+          }
+  
+          footer a {
+              color: #fff;
+              text-decoration: none;
+          }
+  
+          footer a:hover {
+              text-decoration: underline;
+          }
+  
+          /* Social Media Icons Styles */
+          .footer-social ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+              display: flex;
+              justify-content: center; /* Center the social icons */
+          }
+  
+          .footer-social ul li {
+              margin: 0 15px;
+          }
+  
+          .footer-social ul li a {
+              font-size: 2.2em; /* Increase the icon size */
+              color: #fff; /* White color for the icons */
+              transition: transform 0.3s ease;
+          }
+  
+          .footer-social ul li a:hover {
+              transform: scale(1.1); /* Scale effect on hover */
+          }
+  
+          /* Footer Links Styles */
+          .footer-links ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+              display: flex;
+              justify-content: center; /* Center the footer links */
+          }
+  
+          .footer-links ul li {
+              margin: 0 15px;
+          }
+  
+          .footer-links ul li a {
+              color: #fff;
+              text-decoration: none;
+          }
+  
+          .footer-links ul li a:hover {
+              text-decoration: underline;
+          }
+  
+          /* Responsive Design */
+          @media (max-width: 768px) {
+              footer {
+                  padding: 20px 30px; /* Reduced padding on smaller screens */
+              }
+  
+              footer .footer-left,
+              footer .footer-links,
+              footer .footer-social {
+                  text-align: center; /* Center the content on smaller screens */
+              }
+  
+              footer .footer-social ul {
+                  justify-content: center; /* Center the social media icons */
+              }
+          }
+  
+          /* Keyframe Animation for Fade In */
+          @keyframes fadeIn {
+              0% {
+                  opacity: 0;
+                  transform: translateY(20px);
+              }
+              100% {
+                  opacity: 1;
+                  transform: translateY(0);
+              }
+          }
+      </style>
+  </head>
+  <body>
+      <!-- Header -->
+      <header>
+          <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+          <h1>COLLEGE <span>MANTRA</span></h1>
+          <span id="log"><a href="{% url 'candidate_app:candidate_logout' %}">Logout</a></span>
+      </header>
+  
+      <!-- Navigation -->
+      <nav>
+          <ul>
+              <li><a href="{% url 'cm_app:home' %}">Home</a></li>
+              <li><a href="{% url 'cm_app:about' %}">About</a></li>
+              <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
+              <!-- <li><a href="{% url 'cm_app:seat_matrix' %}">Seat Matrix</a></li> -->
+              <li><a href="{% url 'cm_app:important_dates' %}">Important Dates</a></li>
+              <li><a href="{% url 'cm_app:announcements' %}">Announcements</a></li>
+              <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+          </ul>
+      </nav>
   <section class="student-home">
     
-    <div class="container">
-      <div class="action-item">
+    <div class="container1">
+      <div class="action-item1">
         <h1 class="greeting">Hi {{ user.username }}</h1>
       </div>
     
     
     <div class="container">
       <div class="container">
-        <div class="action-item">
-          <p>Home</p>
-          <a href="{% url 'candidate_app:candidate_home' %}" class="btn">Go</a>
-        </div>
+
       <div class="action-item">
         <p>Register/Update Your Details</p>
         <a href="{% url 'candidate_app:candidate_register'  %}" class="btn">Go</a>
@@ -472,17 +848,34 @@ footer a:hover {
         <p>Check Results</p>
         <a href="{% url 'candidate_app:get_candidate_allocation' %}" class="btn">Go</a>
       </div>
-      <div class="action-item">
-        <p>Logout</p>
-        <a href="{% url 'candidate_app:candidate_logout'  %}" class="btn">Go</a>
       </div>
     </div>
   </section>
 
-  <footer>
-    <div class="footer-content">
-      <p>© 2024 COLLEGE MANTRA | All rights reserved</p>
-    </div>
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+          <div class="footer-left">
+              <p>© 2024 COLLEGE MANTRA | All rights reserved</p>
+              <p>Content Owned and Managed by College Mantra (CM)</p>
+          </div>
+
+          <div class="footer-links">
+              <ul>
+                  <li><a href="">Privacy Policy</a></li>
+                  <li><a href="">Terms & Conditions</a></li>
+                  <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+              </ul>
+          </div>
+
+          <div class="footer-social">
+              <ul>
+                  <li><a href="https://facebook.com/college-mantra" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="https://x.com/college-mantra" target="_blank"><i class="fab fa-x"></i></a></li>
+                  <li><a href="https://linkedin.com/college-mantra" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+              </ul>
+          </div>
+      </div>
   </footer>
 
 </body>
