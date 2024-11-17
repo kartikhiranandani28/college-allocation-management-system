@@ -1,4 +1,5 @@
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
     <!--Stylesheet-->
     <style media="screen">
       *,
-*:before,
+      *:before,
 *:after{
     padding: 0;
     margin: 0;
@@ -22,6 +23,7 @@ body{
 }
 .background{
     width: 430px;
+    margin-top: 120px;
     height: 520px;
     position: absolute;
     transform: translate(-50%,-50%);
@@ -33,6 +35,48 @@ body{
     width: 200px;
     position: absolute;
     border-radius: 50%;
+}
+
+ /* Header Styles */
+ header {
+  background-color: #000; /* Black background */
+  color: #fff;
+  padding: 1px 0; /* Further reduced padding */
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 0;
+  width:100%;
+  z-index: 1000;
+  justify-content: space-between; /* Ensures space between logo and heading */
+  height: 17vh; /* Allows content to determine height */
+}
+
+.container_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center; /* Center the content in the header */
+}
+
+.logo {
+  width: 80px; /* Reduced logo size */
+  height: auto;
+  position: absolute; /* Position logo at the left edge */
+  left: 20px;
+  top:7px;
+}
+
+h1 {
+  font-family: 'Magnolia Script', cursive;
+  font-size: 2.0em; /* Reduced font size of the heading */
+  color: #fff;
+  margin-left: 80px; /* Adjust space after logo */
+  text-align: center; /* Ensure the heading is centered */
+}
+
+h1 span {
+  color: #00BAFF; /* Contrasting color for "Mantra" */
 }
 .shape:first-child{
     background: linear-gradient(
@@ -52,8 +96,9 @@ body{
     bottom: -80px;
 }
 form{
-    height: 600px;
-    width: 450px;
+    height: 520px;
+    width: 400px;
+    margin-top: 120px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -78,7 +123,6 @@ form h3{
     line-height: 42px;
     text-align: center;
 }
-
 label{
     display: block;
     margin-top: 30px;
@@ -137,6 +181,12 @@ button{
     </style>
 </head>
 <body>
+    <header>
+        <div class="container_header">
+          <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+          <h1>COLLEGE <span>MANTRA</span></h1>
+        </div>
+      </header> 
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>

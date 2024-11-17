@@ -36,7 +36,7 @@ h1 {
 
 .student-info h2 {
     font-size: 22px;
-    color: #326e0a;
+    color:  #00BAFF;
     margin-bottom: 10px;
 }
 
@@ -52,7 +52,7 @@ h1 {
 
 .allocation-result h2 {
     font-size: 22px;
-    color: #326e0a;
+    color:  #00BAFF;
     margin-bottom: 10px;
 }
 
@@ -69,7 +69,7 @@ h1 {
 }
 
 .allocation-result th {
-    background-color: #326e0a;
+    background-color:  #00BAFF;
     color: white;
     font-size: 16px;
 }

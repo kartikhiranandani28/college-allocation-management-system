@@ -5,6 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Candidate  # Import Candidate model
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+from django.http import HttpResponse
+import random
+
 
 def is_candidate(user):
     return Candidate.objects.filter(username=user.username).exists()
@@ -306,6 +310,95 @@ def get_candidate_allocation(request):
 
     # Render the template with the context
     return render(request, 'candidate/result.html', context)
+
+@login_required(login_url='candidate_app:candidate_login') 
+def candidate_info(request):
+    # Fetch candidate data based on the logged-in user's username
+    candidate1 = Candidate.objects.filter(username=request.user.username).first()  # 'first()' to get only one result
+    return render(request, 'candidate/candidate_info.html', {'candidate':candidate1})
+@login_required(login_url='candidate_app:candidate_login')
+
+def generate_payment_id():
+    """Generate a unique random ID."""
+    return random.randint(100,999)
+def generate_unique_id():
+    """Generate a unique random ID."""
+    return random.randint(1000, 9999)
+def process_payment(request):
+    if request.method == "POST":
+        username = request.user.username  # Assuming the user is authenticated
+        amount = request.POST.get("amount", 0)
+        
+        # Generate unique IDs
+        transaction_id = generate_unique_id()
+        payment_no = generate_payment_id()
+
+        try:
+            with connection.cursor() as cursor:
+                # Check if the user already has an entry in the candidate_payment table
+                cursor.execute(
+                    "SELECT COUNT(*) FROM candidate_payment WHERE username = %s", [username]
+                )
+                result = cursor.fetchone()
+                if result[0] > 0:
+                    return HttpResponse("Payment already exists for this user.", status=400)
+
+                # Insert a new payment record
+                cursor.execute(
+                    """
+                    INSERT INTO payment (transaction_id, payment_no, pay_date)
+                    VALUES (%s, %s, %s)
+                    """,
+                    [transaction_id, payment_no, now()],
+                )
+
+                # Insert into candidate_payment table
+                cursor.execute(
+                    """
+                    INSERT INTO candidate_payment (username, payment_no)
+                    VALUES (%s, %s)
+                    """,
+                    [username, payment_no],
+                )
+
+                # Check if the user has an allocation entry
+                cursor.execute(
+                    """
+                    SELECT allocation_id FROM allocation WHERE username = %s
+                    """,
+                    [username],
+                )
+                allocation = cursor.fetchone()
+
+                if allocation:
+                    allocation_id = allocation[0]
+
+                    # Mark the allocation as confirmed
+                    cursor.execute(
+                        """
+                        INSERT INTO confirms (payment_no, allocation_id)
+                        VALUES (%s, %s)
+                        """,
+                        [payment_no, allocation_id],
+                    )
+
+                    # Optionally, update any payment-related status in the allocation table
+                    cursor.execute(
+                        """
+                        UPDATE allocation SET payment_status = 'Confirmed'
+                        WHERE allocation_id = %s
+                        """,
+                        [allocation_id],
+                    )
+
+                return HttpResponse("Payment successful!")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {str(e)}", status=500)
+    else:
+        return HttpResponse("Invalid request method.", status=405)
+@login_required(login_url='candidate_app:candidate_login')
+def payment(request):
+    return render(request,'candidate/payment1.html')
 
 # @login_required(login_url='candidate_app:candidate_login')
 # def allocation_result(request):

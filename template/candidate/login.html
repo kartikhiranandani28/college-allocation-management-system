@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,30 +11,44 @@
     <!--Stylesheet-->
     <style media="screen">
       *,
-*:before,
+      *:before,
 *:after{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-    body {
-      font-size: 16px;
-      font-family: 'Arial', sans-serif;
-      background-color: #000000; /* Light gray background for better contrast */
-      margin: 0;
-      padding: 0;
-      color: #333; /* Darker text color for better readability */
-    }
+body{
+    background-color: #080710;
+}
+.background{
+    width: 430px;
+    margin-top: 120px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
 
  /* Header Styles */
-header {
+ header {
   background-color: #000; /* Black background */
   color: #fff;
   padding: 1px 0; /* Further reduced padding */
   display: flex;
   align-items: center;
+  position: relative;
+  top: 0;
+  width:100%;
+  z-index: 1000;
   justify-content: space-between; /* Ensures space between logo and heading */
-  height: 80px; /* Allows content to determine height */
+  height: 17vh; /* Allows content to determine height */
 }
 
 .container_header {
@@ -48,7 +63,7 @@ header {
   height: auto;
   position: absolute; /* Position logo at the left edge */
   left: 20px;
-  top:20px;
+  top:7px;
 }
 
 h1 {
@@ -61,20 +76,6 @@ h1 {
 
 h1 span {
   color: #00BAFF; /* Contrasting color for "Mantra" */
-}
-.background{
-    width: 430px;
-    height: 520px;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    left: 50%;
-    top: 50%;
-}
-.background .shape{
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    border-radius: 50%;
 }
 .shape:first-child{
     background: linear-gradient(
@@ -96,6 +97,7 @@ h1 span {
 form{
     height: 520px;
     width: 400px;
+    margin-top: 120px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -178,6 +180,12 @@ button{
     </style>
 </head>
 <body>
+  <header>
+    <div class="container_header">
+      <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+      <h1>COLLEGE <span>MANTRA</span></h1>
+    </div>
+  </header> 
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>

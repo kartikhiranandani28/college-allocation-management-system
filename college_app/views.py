@@ -152,30 +152,61 @@ def college_home(request):
 
 def college_courses(request):
     college_id=request.user.username
-    with connection.cursor() as cursor:
-        # Query to fetch courses offered by a specific college
-        cursor.execute("""
-            SELECT c.course_id, c.branch_name
-            FROM college_course cc
-            INNER JOIN course c ON cc.course_id = c.course_id
-            WHERE cc.college_id = %s
-        """, [college_id])
-        # Fetch all results
-        courses = [
-            {"course_id": row[0], "branch_name": row[1]}
-            for row in cursor.fetchall()
-        ]
+    # SQL query to fetch seat matrix for a specific college
+    query = """
+        SELECT 
+            c.College_Name,
+            co.Branch_Name,
+            co.Program_Name,
+            sm.General,
+            sm.General_PwD,
+            sm.OBC_NCL,
+            sm.OBC_NCL_PwD,
+            sm.SC,
+            sm.SC_PwD,
+            sm.ST,
+            sm.ST_PwD,
+            sm.Total_Seats,
+            sm.Allocated_Seats
+        FROM 
+            Seat_Matrix sm
+        JOIN 
+            College_Course cc ON sm.College_ID = cc.College_ID AND sm.Course_ID = cc.Course_ID
+        JOIN 
+            College c ON cc.College_ID = c.College_ID
+        JOIN 
+            Course co ON cc.Course_ID = co.Course_ID
+        WHERE 
+            c.College_ID = %s;
+    """
 
-    # Query to get the college name
+    # Execute the query and fetch data
     with connection.cursor() as cursor:
-        cursor.execute("""
-            SELECT college_name
-            FROM college
-            WHERE college_id = %s
-        """, [college_id])
-        college_name = cursor.fetchone()[0]
+        cursor.execute(query, [college_id])
+        rows = cursor.fetchall()
 
+    # Create a list of dictionaries to hold the data
+    college_courses = [
+        {
+            'college_name': row[0],
+            'branch_name': row[1],
+            'program_name': row[2],
+            'general': row[3],
+            'general_pwd': row[4],
+            'obc_ncl': row[5],
+            'obc_ncl_pwd': row[6],
+            'sc': row[7],
+            'sc_pwd': row[8],
+            'st': row[9],
+            'st_pwd': row[10],
+            'total_seats': row[11],
+            'allocated_seats': row[12],
+        }
+        for row in rows
+    ]
+
+    # Render the template with the data
     return render(request, "colleges/college_courses.html", {
-        "college_name": college_name,
-        "courses": courses
+        "college_courses": college_courses,
+        "college_id": college_id,
     })

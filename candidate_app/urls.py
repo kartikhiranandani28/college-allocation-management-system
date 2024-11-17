@@ -16,7 +16,10 @@ urlpatterns = [
     path('add_preference/<int:college_id>/<int:course_id>/', views.add_preference, name='add_preference'),
     path('remove_preference/<int:college_id>/<int:course_id>/', views.remove_preference, name='remove_preference'),
     path('list/', views.college_course_view, name='college_course_view'),
-    path('result/',views.get_candidate_allocation,name='get_candidate_allocation')
+    path('result/',views.get_candidate_allocation,name='get_candidate_allocation'),
+    path('process_payment/', views.process_payment, name='process_payment'),
+    path('payment/', views.payment, name='payment'),
+    path('candidate_info/', views.candidate_info, name='candidate_info')
     # Uncomment the following line if needed:
     # path('preferences/', views.remove, name='preferences'),
 
