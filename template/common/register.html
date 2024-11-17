@@ -88,7 +88,9 @@ h1 span {
   color: #CB9DF0;  /* Keep the color change */
   background-color: transparent;  /* Removes background color effect */
 }
-
+.new{
+  background-image: linear-gradient(#E6F7FF,#99E6FF,#00D1FF);
+}
 
     /* Hero Section */
     #hero {
@@ -101,7 +103,7 @@ h1 span {
       color: #fff;
       position: relative;
       overflow: hidden;
-      background-color: #CB9DF0;
+      /* background-image: linear-gradient(#E6F7FF,#99E6FF,#00D1FF); */
     }
 
     /* Hero Background Gradient Overlay */
@@ -138,7 +140,7 @@ h1 span {
 
     #hero .btn {
       background-color: #fff;
-      color: #2563EB;
+      color: #6425eb;
       padding: 14px 30px;
       text-decoration: none;
       margin-top: 20px;
@@ -149,7 +151,7 @@ h1 span {
     }
 
     #hero .btn:hover {
-      background-color: #2563EB;
+      background-color: #3485ff;
       color: #fff;
       transform: scale(1.1); /* Hover effect to scale the button */
     }
@@ -162,7 +164,7 @@ h1 span {
       flex-wrap: wrap;
       padding: 30px;
       gap: 20px;
-      background-color: #CB9DF0;
+      /* background-image: linear-gradient(#E6F7FF,#99E6FF,#00D1FF); */
     }
 
     .action-item {
@@ -173,12 +175,14 @@ h1 span {
     .action-item p {
       font-size: 1.2rem;
       margin-bottom: 10px;
-      color: #2563EB;
+      color: #490b7c;
     }
 
     .btn {
       display: inline-block;
-      background: linear-gradient(to right, #6a1b9a, #2563EB);
+      /* background: linear-gradient(to bottom right, #60A5FA, #22D3EE, #2DD4BF); */
+      background: linear-gradient(to right, #FB923C, #EC4899, #9333EA);
+      /* background: linear-gradient(to bottom, #FFE4E6, #CCFBF1); */
       color: white;
       padding: 15px 30px;
       border-radius: 50px;
@@ -435,7 +439,7 @@ footer a:hover {
       <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
     </ul>
   </nav>
-
+<div class="new">
 <section id="hero">
     <div class="container">
         <h2>Welcome to COLLEGE MANTRA 2024</h2>
@@ -464,7 +468,7 @@ footer a:hover {
         </div>
     </div>
 </section>
-
+</div>
 <footer>
   <div class="footer-content">
     <div class="footer-left">

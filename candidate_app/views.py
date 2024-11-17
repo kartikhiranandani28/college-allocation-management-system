@@ -109,13 +109,26 @@ def candidate_signup(request):
         confirm_password = request.POST.get('confirm_password')
 
         if password == confirm_password:
-            # Create the User instance
-            user = User.objects.create_user(username=username, password=password)
-            user.save()
+            try:
+                # Start the transaction block
+                with transaction.atomic():
+                    # Create the User instance
+                    user = User.objects.create_user(username=username, password=password)
+                    user.save()
 
-            messages.success(request, "Candidate registered successfully!")
-            return redirect('candidate_app:candidate_login')  # Redirect to login page after registration
-            
+                    # Optionally, add any other model objects or operations you want to create in this transaction
+                    # For example, creating a Candidate model record if you have such a model.
+
+                    # Commit the transaction (this happens automatically when the block is exited without error)
+                
+                messages.success(request, "Candidate registered successfully!")
+                return redirect('candidate_app:candidate_login')  # Redirect to login page after registration
+
+            except Exception as e:
+                # If an error occurs, the transaction will be rolled back
+                messages.error(request, f"Error during signup: {e}")
+                return redirect('candidate_app:candidate_signup')  # Stay on the signup page
+
         else:
             messages.error(request, "Passwords do not match.")
 
@@ -209,7 +222,9 @@ def remove_preference(request, college_id, course_id):
     return redirect('candidate_app:college_course_view')
 
 # View for college courses list
+
 @login_required(login_url='candidate_app:candidate_login')
+@candidate_required
 def college_course_view(request):
     candidate_id = request.user.username  # Assuming the User model's username is username
 
@@ -252,6 +267,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 @login_required(login_url='candidate_app:candidate_login')
+@candidate_required
 def get_candidate_allocation(request):
     # Initialize context for the template
     context = {
@@ -324,6 +340,83 @@ def generate_payment_id():
 def generate_unique_id():
     """Generate a unique random ID."""
     return random.randint(1000, 9999)
+
+@login_required(login_url='candidate_app:candidate_login')
+@candidate_required
+def get_candidate_allocation(request):
+    # Initialize context for the template
+    context = {
+        'allocation_status': None,
+        'candidate_name': None,
+        'allocation': None,
+    }
+
+    # Define the SQL query with a placeholder
+    sql_query = """
+    SELECT 
+        c.Candidate_Name,
+        c.Roll_No,
+        p.Choice_No,
+        cl.College_Name,
+        co.Branch_Name,
+        co.Program_Name
+    FROM 
+        Can_Alloc ca
+    JOIN 
+        Allocation a ON ca.Allocation_ID = a.Allocation_ID
+    JOIN 
+        Preference p ON a.Allocation_ID = p.Choice_ID
+    JOIN 
+        College_Course cc ON p.College_ID = cc.College_ID AND p.Course_ID = cc.Course_ID
+    JOIN 
+        Course co ON cc.Course_ID = co.Course_ID
+    JOIN 
+        Candidate c ON ca.username = c.username
+    JOIN 
+        College cl ON cc.College_ID = cl.College_ID  -- Join College table
+    WHERE 
+        ca.username = %s;  -- Use a placeholder for the username
+    """
+
+    # Use a cursor to execute the SQL query
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query, [request.user.username])  # Pass the logged-in user's username
+        result = cursor.fetchall()  # Fetch all results
+
+        # Process the results
+        if result:
+            # Assuming there's only one result for a given username
+            candidate_name, roll_no,choice_no, college_name, branch_name, program_name = result[0]
+            context['candidate_name'] = candidate_name
+            context['allocation'] = {
+                'choice_no': choice_no,
+                'roll_no': roll_no,
+                'college_name': college_name,
+                'branch_name': branch_name,
+                'program_name': program_name,
+            }
+            context['allocation_status'] = 'Your allocation is successful!'
+        else:
+            context['allocation_status'] = 'No allocation found for the given username.'
+
+    # Render the template with the context
+    return render(request, 'candidate/result.html', context)
+
+
+
+
+
+# def generate_unique_id():
+#     """Generate a unique random ID."""
+#     return random.randint(1000, 9999)
+
+
+# def generate_payment_id():
+#     """Generate a unique random ID."""
+#     return random.randint(100, 999)
+
+@candidate_required
+@login_required(login_url='candidate_app:candidate_login')
 def process_payment(request):
     if request.method == "POST":
         username = request.user.username  # Assuming the user is authenticated
@@ -334,44 +427,57 @@ def process_payment(request):
         payment_no = generate_payment_id()
 
         try:
-            with connection.cursor() as cursor:
-                # Check if the user already has an entry in the candidate_payment table
-                cursor.execute(
-                    "SELECT COUNT(*) FROM candidate_payment WHERE username = %s", [username]
-                )
-                result = cursor.fetchone()
-                if result[0] > 0:
-                    return HttpResponse("Payment already exists for this user.", status=400)
+            with transaction.atomic():  # Start the transaction block
+                # Define the cursor to interact with the database
+                with connection.cursor() as cursor:
+                    # Fetch allocation_id for the user
+                    cursor.execute(
+                        """
+                        SELECT allocation_id FROM can_alloc WHERE username = %s
+                        """,
+                        [username],
+                    )
+                    allocation = cursor.fetchone()
+                    if allocation:
+                        allocation_id = allocation[0]
+                    else:
+                        return HttpResponse("Allocation not found")
 
-                # Insert a new payment record
-                cursor.execute(
-                    """
-                    INSERT INTO payment (transaction_id, payment_no, pay_date)
-                    VALUES (%s, %s, %s)
-                    """,
-                    [transaction_id, payment_no, now()],
-                )
+                    # Check if the user already has an entry in the candidate_payment table
+                    cursor.execute(
+                        "SELECT COUNT(*) FROM candidate_payment WHERE username = %s",
+                        [username],
+                    )
+                    result = cursor.fetchone()
+                    if result[0] > 0:
+                        return HttpResponse("Payment already exists for this user.", status=400)
 
-                # Insert into candidate_payment table
-                cursor.execute(
-                    """
-                    INSERT INTO candidate_payment (username, payment_no)
-                    VALUES (%s, %s)
-                    """,
-                    [username, payment_no],
-                )
+                    # Insert a new payment record
+                    cursor.execute(
+                        """
+                        INSERT INTO payment (transaction_id, payment_no, pay_date)
+                        VALUES (%s, %s, %s)
+                        """,
+                        [transaction_id, payment_no, now()],
+                    )
 
-                # Check if the user has an allocation entry
-                cursor.execute(
-                    """
-                    SELECT allocation_id FROM allocation WHERE username = %s
-                    """,
-                    [username],
-                )
-                allocation = cursor.fetchone()
+                    # Insert into candidate_payment table
+                    cursor.execute(
+                        """
+                        INSERT INTO candidate_payment (username, payment_no)
+                        VALUES (%s, %s)
+                        """,
+                        [username, payment_no],
+                    )
 
-                if allocation:
-                    allocation_id = allocation[0]
+                    # Update allocation with payment status
+                    cursor.execute(
+                        """
+                        INSERT INTO allocation (allocation_id, payment_status)
+                        VALUES (%s, %s)
+                        """,
+                        [allocation_id, "1"],
+                    )
 
                     # Mark the allocation as confirmed
                     cursor.execute(
@@ -382,23 +488,29 @@ def process_payment(request):
                         [payment_no, allocation_id],
                     )
 
-                    # Optionally, update any payment-related status in the allocation table
-                    cursor.execute(
-                        """
-                        UPDATE allocation SET payment_status = 'Confirmed'
-                        WHERE allocation_id = %s
-                        """,
-                        [allocation_id],
-                    )
-
-                return HttpResponse("Payment successful!")
+                    return HttpResponse("Payment successful!")
         except Exception as e:
+            # In case of an error, the transaction will be rolled back and the error message will be returned
             return HttpResponse(f"An error occurred: {str(e)}", status=500)
+
     else:
         return HttpResponse("Invalid request method.", status=405)
 @login_required(login_url='candidate_app:candidate_login')
+@candidate_required
 def payment(request):
-    return render(request,'candidate/payment1.html')
+    return render(request, 'candidate/payment1.html')
+
+
+                
+
+                
+                    
+
+                # Check if the user has an allocation entry
+              
+
+                    # Optionally, update any payment-related status in the allocation table
+                
 
 # @login_required(login_url='candidate_app:candidate_login')
 # def allocation_result(request):

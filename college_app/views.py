@@ -8,7 +8,7 @@ from .models import College  # Import College model
 from django.contrib.auth.models import User
 
 def is_college(user):
-    return College.objects.filter(college_id=user.username).exists()
+    return College.objects.filter(College_ID=user.username).exists()
 
 # Custom decorator to ensure the user is a College member
 def college_required(view_func):
@@ -44,20 +44,30 @@ def college_signup(request):
 
         if password == confirm_password:
             try:
-                # Create the User instance
-                user = User.objects.create_user(username=username, password=password)
-                user.save()
+                # Start the transaction block
+                with transaction.atomic():
+                    # Create the User instance
+                    user = User.objects.create_user(username=username, password=password)
+                    user.save()
 
-                # Additional college information can be added here if needed
-                messages.success(request, "College registered successfully!")
-                return redirect('college_app:college_login')  # Redirect to login page after registration
+                    # Additional operations for college can be added here (e.g., creating a College model)
+                    # Example: Create a College instance
+                    # college = College(username=user, college_name="College Name", ...)
+                    # college.save()
+
+                    # If everything goes well, commit the transaction
+                    messages.success(request, "College registered successfully!")
+                    return redirect('college_app:college_login')  # Redirect to login page after registration
+                
             except Exception as e:
+                # If an error occurs, the transaction will be rolled back
                 messages.error(request, f"An error occurred: {e}")
+                return redirect('college_app:college_signup')  # Stay on the signup page
+
         else:
             messages.error(request, "Passwords do not match.")
 
     return render(request, 'colleges/signup.html')
-
 
 # College logout view
 def college_logout(request):
@@ -110,46 +120,49 @@ def college_register(request):
 
 
 # Function to fetch the college list
-def get_college_list():
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM College")  # Adjust table name to match your model table
-        results = cursor.fetchall()
-    return results
+# @college_required
+# def get_college_list():
+#     with connection.cursor() as cursor:
+#         cursor.execute("SELECT * FROM College")  # Adjust table name to match your model table
+#         results = cursor.fetchall()
+#     return results
 
 
 # Function to fetch the preference list
-def get_preference_list():
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM preference")
-        results = cursor.fetchall()
-    return results
+# def get_preference_list():
+#     with connection.cursor() as cursor:
+#         cursor.execute("SELECT * FROM preference")
+#         results = cursor.fetchall()
+#     return results
 
 
 # Function to fetch the course list
-def get_course_list():
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM Course")
-        results = cursor.fetchall()
-    return results
+
+# def get_course_list():
+#     with connection.cursor() as cursor:
+#         cursor.execute("SELECT * FROM Course")
+#         results = cursor.fetchall()
+#     return results
 
 
-# View to display college list
-def college_list(request):
-    # Fetch college, preference, and course lists
-    colleges = get_college_list()
-    preferences = get_preference_list()
-    courses = get_course_list()
+# # View to display college list
+# def college_list(request):
+#     # Fetch college, preference, and course lists
+#     colleges = get_college_list()
+#     preferences = get_preference_list()
+#     courses = get_course_list()
 
-    return render(request, 'colleges/college_list.html', {
-        'colleges': colleges,
-        'preference': preferences,
-        'courses': courses
-    })
+#     return render(request, 'colleges/college_list.html', {
+#         'colleges': colleges,
+#         'preference': preferences,
+#         'courses': courses
+#     })
 
 # Home page for colleges
 def college_home(request):
     return render(request, 'colleges/home.html')
-
+@login_required(login_url='college_app:college_login') 
+@college_required
 def college_courses(request):
     college_id=request.user.username
     # SQL query to fetch seat matrix for a specific college
@@ -210,3 +223,41 @@ def college_courses(request):
         "college_courses": college_courses,
         "college_id": college_id,
     })
+@login_required(login_url='college_app:college_login')
+@college_required 
+def show_college_allocation(request):
+    college_id = request.user.username  # Assuming the username is the College_ID
+
+    with connection.cursor() as cursor:
+        query = '''
+        SELECT 
+            c.Candidate_Name, 
+            c.Gender, 
+            c.DOB, 
+            c.Candidate_Rank, 
+            c.XII_Percentage, 
+            c.Category, 
+            c.Nationality, 
+            c.Address, 
+            c.Email, 
+            c.Phone, 
+            co.College_Name, 
+            co.College_Type, 
+            co.Location, 
+            cu.Branch_Name, 
+            cu.Program_Name, 
+            a.Allocation_ID, 
+            a.Payment_Status
+        FROM col_allo ca
+        JOIN College co ON ca.College_ID = co.College_ID
+        JOIN Course cu ON ca.Course_ID = cu.Course_ID
+        JOIN Allocation a ON ca.Allocation_ID = a.Allocation_ID
+        JOIN can_alloc ca2 ON a.Allocation_ID = ca2.Allocation_ID
+        JOIN Candidate c ON ca2.username = c.username
+        WHERE co.College_ID = %s;
+        '''
+        cursor.execute(query, [college_id])  # Pass the college_id as parameter to filter
+        rows = cursor.fetchall()  # Fetch all rows for the specified college
+
+    context = {'students': rows}  # Pass the student data to the template
+    return render(request, 'colleges/college_allocation.html', context)

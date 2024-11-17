@@ -14,8 +14,13 @@
             {% csrf_token %}
             <label for="college_name">College Name</label>
             <input type="text" id="college_name" name="college_name" required>
-            <label for="college_type">College Type</label>
-            <input type="text" id="college_type" name="college_type" required>
+            <!-- <label for="college_type">College Type</label>
+            <input type="text" id="college_type" name="college_type" required> -->
+            <select name="gender"  required>
+                <option value="" disabled selected >College Type</option>
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select>
             <label for="contact_no">Contact Number</label>
             <input type="text" id="website" name="website" required>
             <label for="contact_no">Website</label>

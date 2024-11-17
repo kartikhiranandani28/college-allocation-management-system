@@ -295,9 +295,11 @@
         <section>
             <a href="{% url 'college_app:college_register' %}" class="btn">Register for College</a>
         </section>
-
         <section>
-            <a href="" class="btn">Admitted Student</a>
+            <a href="{% url 'college_app:college_courses' %}" class="btn">View courses</a>
+        </section>
+        <section>
+            <a href="{% url 'college_app:show_college_allocation' %}" class="btn">Admitted Students</a>
         </section>
     </main>
 

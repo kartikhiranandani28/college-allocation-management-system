@@ -1,0 +1,32 @@
+<table>
+    <thead>
+        <tr>
+            <th>Candidate Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Rank</th>
+            <th>XII Percentage</th>
+            <th>Category</th>
+            <th>Branch</th>
+            <th>Program</th>
+            <th>Contact Info</th>
+            <th>Allocation Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.0 }}</td>
+            <td>{{ student.1 }}</td>
+            <td>{{ student.2 }}</td>
+            <td>{{ student.3 }}</td>
+            <td>{{ student.4 }}</td>
+            <td>{{ student.5 }}</td>
+            <td>{{ student.13 }}</td>
+            <td>{{ student.14 }}</td>
+            <td>{{ student.8 }}<br>{{ student.9 }}</td>
+            <td> {{ student.16 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
