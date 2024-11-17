@@ -81,16 +81,19 @@ def candidate_login(request):
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
-          login(request, user)
-          if Candidate.objects.filter(username=user.username).exists():
-            messages.success(request, "Login successful!")  # Add success message
+            login(request, user)
             return redirect("candidate_app:candidate_home")
-          else:
-           messages.error(request, "User  is not registered as a Candidate.")
-          return redirect("candidate_app:candidate_login")
+          
+        #  if Candidate.objects.filter(username=user.username).exists():
+        # #     messages.success(request, "Login successful!")  # Add success message
+          
+        #  else:
+        # #    messages.error(request, "User  is not registered as a Candidate.")
+        #    return redirect("candidate_app:candidate_login")
+
         else:
          messages.error(request, 'Invalid credentials')  # Set error message for invalid credentials
-         return render(request, 'candidate/login.html')  # Render login page again if login fails
+         return render(request, 'candidate/signup.html')  # Render login page again if login fails
 
     return render(request, 'candidate/login.html')  # Render login page for GET request
 
@@ -115,10 +118,8 @@ def candidate_signup(request):
     return render(request, 'candidate/signup.html')
 
 # Candidate home view
-@login_required(login_url='candidate_app:candidate_signup')
+@login_required(login_url='candidate_app:candidate_login')
 def candidate_home(request):
-    if request.user.is_anonymous:
-        return redirect("candidate/login")
     return render(request, 'candidate/candidate_home.html')
 
 # Logout view

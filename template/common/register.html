@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,75 +6,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>COLLEGE MANTRA</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'colleges/home.css' %}">
-  <link rel="stylesheet" href="{% static 'common.css' %}">
+  
  
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
-    /* General Reset */
-    * {
+    
+     body {
+      font-size: 16px;
+      font-family: 'Arial', sans-serif;
+      background-color: #F4F4F9; /* Light gray background for better contrast */
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      color: #333; /* Darker text color for better readability */
     }
 
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f7fa;
-      color: #333;
+
+    
+header {
+  background-color: #000; /* Black background */
+  color: #fff;
+  padding: 1px 0; /* Further reduced padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures space between logo and heading */
+  height: 80px; /* Allows content to determine height */
+}
+
+.container_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center; /* Center the content in the header */
+}
+
+.logo {
+  width: 80px; /* Reduced logo size */
+  height: auto;
+  position: absolute; /* Position logo at the left edge */
+  left: 20px;
+  top:20px;
+}
+
+h1 {
+  font-family: 'Magnolia Script', cursive;
+  font-size: 2.0em; /* Reduced font size of the heading */
+  color: #fff;
+  margin-left: 80px; /* Adjust space after logo */
+  text-align: center; /* Ensure the heading is centered */
+}
+h1 span {
+      color: #00BAFF; /* Set color of "Mantra" to #00BAFF */
     }
 
-    .container {
-      width: 100%;
-      margin: 0 auto;
-    }
 
-    /* Header Section */
-    header {
-      background-color: black;  /* Purple for Header */
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-    }
 
-    header h1 {
-      font-size: 2rem;
-      margin: 0;
-    }
-
-    .container_header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .logo {
-      width: 80px;
-      height: auto;
-      position: absolute;
-      left: 0;
-      top: 10px;
-    }
-
-    .title {
-      flex-grow: 1;
-      font-size: 2.4rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    /* Navigation */
+    /* Navigation Styles */
     nav {
-      background-color: #F5F5F5;
-      padding: 15px 0;
-      margin-bottom: 20px;
+      background-color: #000; /* Black background */
+      padding: 10px 0;
+      text-align: center;
     }
 
     nav ul {
       list-style: none;
-      text-align: center;
+      padding: 0;
+      margin: 0;
     }
 
     nav ul li {
@@ -83,34 +79,77 @@
     }
 
     nav ul li a {
-      color: #333;
+      color: #fff;
       text-decoration: none;
-      font-size: 1.1rem;
-      padding: 8px 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      font-size: 1.1em;
     }
 
     nav ul li a:hover {
-      background-color: #3e94ea;
-    }
+  color: #CB9DF0;  /* Keep the color change */
+  background-color: transparent;  /* Removes background color effect */
+}
+
 
     /* Hero Section */
     #hero {
-      background-color: #28a745;  /* Green color */
-      color: white;
+      background: url('{% static "josaa-hero.jpg" %}') no-repeat center center/cover;
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 80px 20px; /* Adjust padding for space */
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      background-color: #CB9DF0;
+    }
+
+    /* Hero Background Gradient Overlay */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+      z-index: 0;
     }
 
     #hero h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+      font-family: 'Georgia', serif;
+      font-size: 4em;
+      margin: 0;
+      z-index: 1;
+      color: #3B1E54;
+     
+      
     }
 
     #hero p {
-      font-size: 1.5rem;
+      font-size: 1.5em;
       margin-top: 10px;
+      z-index: 1;
+      color: #000;
+      
+    }
+
+    #hero .btn {
+      background-color: #fff;
+      color: #2563EB;
+      padding: 14px 30px;
+      text-decoration: none;
+      margin-top: 20px;
+      border-radius: 5px;
+      font-size: 1.2em;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    #hero .btn:hover {
+      background-color: #2563EB;
+      color: #fff;
+      transform: scale(1.1); /* Hover effect to scale the button */
     }
 
     /* Buttons and Sections */
@@ -121,6 +160,7 @@
       flex-wrap: wrap;
       padding: 30px;
       gap: 20px;
+      background-color: #CB9DF0;
     }
 
     .action-item {
@@ -159,156 +199,241 @@
     .btn:active {
       transform: translateY(0);
     }
+  
+/* Footer Styles */
+footer {
+  background-color: #000; /* Black background */
+  color: #fff;
+  padding: 40px 50px; /* Increased padding for more space */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column; /* Stack items vertically */
+  text-align: center; /* Center text */
+}
 
-    /* Footer Styling */
-    footer {
-      background-color: black;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
+footer .footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+footer .footer-left,
+footer .footer-links,
+footer .footer-social {
+  flex: 1 1 auto;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* Footer Left Section (Copyright, etc.) */
+footer .footer-left {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+footer .footer-links {
+  margin-bottom: 20px;
+}
+
+footer .footer-social {
+  margin-bottom: 20px;
+}
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Social Media Icons Styles */
+.footer-social ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Center the social icons */
+}
+
+.footer-social ul li {
+  margin: 0 15px;
+}
+
+.footer-social ul li a {
+  font-size: 2.2em; /* Increase the icon size */
+  color: #fff; /* White color for the icons */
+  transition: transform 0.3s ease;
+}
+
+.footer-social ul li a:hover {
+  transform: scale(1.1); /* Scale effect on hover */
+}
+
+/* Footer Links Styles */
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Center the footer links */
+}
+
+.footer-links ul li {
+  margin: 0 15px;
+}
+
+.footer-links ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  footer {
+    padding: 20px 30px; /* Reduced padding on smaller screens */
+  }
+
+  footer .footer-left,
+  footer .footer-links,
+  footer .footer-social {
+    text-align: center; /* Center the content on smaller screens */
+  }
+
+  footer .footer-social ul {
+    justify-content: center; /* Center the social media icons */
+  }
+}
+
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      background-color: #2563EB;
+      color: #fff;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: 0 auto;
+    .btn:hover {
+      background-color: #CB9DF0;
+      transform: scale(1.05); /* Hover effect */
     }
 
-    .footer-left,
-    .footer-links {
-      flex: 1;
-      margin: 10px;
-    }
-
-    .footer-social {
-      margin: auto;
-    }
-
-    .footer-left p {
-      margin: 5px 0;
-    }
-
-    .footer-links ul,
+    /* Social Media Icons Styles */
     .footer-social ul {
       list-style: none;
       padding: 0;
       margin: 0;
+      display: flex;
+      justify-content: flex-start;
     }
 
-    .footer-links ul li,
     .footer-social ul li {
-      margin: 5px 0;
+      margin: 0 15px;
     }
 
-    .footer-links ul li a,
     .footer-social ul li a {
-      color: white;
+      font-size: 2em; /* Increase the icon size */
+      color: #fff; /* White color for the icons */
+      transition: transform 0.3s ease;
+    }
+
+    .footer-social ul li a:hover {
+      transform: scale(1.1); /* Scale effect on hover */
+    }
+
+    /* Footer Links Styles */
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .footer-links ul li {
+      margin: 0 15px;
+    }
+
+    .footer-links ul li a {
+      color: #fff;
       text-decoration: none;
-      font-size: 1rem;
-      transition: color 0.3s ease;
     }
 
     .footer-links ul li a:hover {
-      color: #f1c40f;
-    }
-
-    .footer-social ul {
-      display: flex;
-      gap: 15px;
-    }
-
-    .footer-social ul li a {
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      color: white;
-      transition: color 0.3s ease;
-    }
-
-    /* Social Media Hover Colors */
-    .footer-social ul li a:hover[href*="facebook"] .fab {
-      color: #3b5998;
-    }
-
-    .footer-social ul li a:hover[href*="x.com"] .fab {
-      color: #1DA1F2;
-    }
-
-    .footer-social ul li a:hover[href*="linkedin"] .fab {
-      color: #0077b5;
-    }
-
-    /* Footer Bottom Section */
-    .footer-bottom {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: #dddddd;
-    }
-
-    .footer-bottom p {
-      margin: 0;
+      text-decoration: underline;
     }
 
     /* Responsive Design */
-    @media (max-width: 480px) {
-      .container_header {
-        flex-direction: column;
-        align-items: center;
+    @media (max-width: 768px) {
+      #hero h1 {
+        font-size: 2.5em;
+      }
+      #hero p {
+        font-size: 1em;
+      }
+      .section h2 {
+        font-size: 2.2em;
       }
 
-      .logo {
-        position: relative;
-        left: auto;
-        margin-bottom: 10px;
+      footer {
+        flex-direction: column; /* Stack footer content vertically */
+        text-align: center;
       }
 
-      .title {
-        font-size: 1.5rem;
+      footer .footer-social ul {
+        justify-content: center; /* Center social icons */
       }
+    }
 
-      header h1 {
-        font-size: 1.4rem;
+    /* Keyframe Animation for Fade In */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
       }
-
-      nav ul {
-        display: block;
-        padding: 0;
-      }
-
-      nav ul li {
-        display: block;
-        margin: 5px 0;
-      }
-
-      nav ul li a {
-        font-size: 1rem;
-        padding: 10px;
+      100% {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
+  
+  <header >
     <div class="container_header">
-        <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
-        <h1 class="title">COLLEGE MANTRA</h1>
+      <img src="{% static 'logo.jpg' %}" alt="College Mantra Logo" class="logo">
+      <h1>COLLEGE <span>MANTRA</span></h1>
     </div>
-</header>  
+  </header>
 
-<nav>
+  <nav>
     <ul>
-        <li><a href="">Home</a></li>
-        <li><a href="{% url 'cm_app:about' %}">About</a></li>
-        <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
-        <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+      <li><a href="{% url 'cm_app:home' %}">Home</a></li>
+      <li><a href="{% url 'cm_app:about' %}">About</a></li>
+      <li><a href="{% url 'cm_app:register' %}">Registration</a></li>
+      <li><a href="{% url 'cm_app:seat_matrix' %}">Seat Matrix</a></li>
+      <li><a href="{% url 'cm_app:important_dates' %}">Important Dates</a></li> 
+      <li><a href="{% url 'cm_app:announcements' %}">Announcements</a></li>
+      <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
     </ul>
-</nav>
+  </nav>
 
-<!-- Hero Section (Green Color) -->
 <section id="hero">
     <div class="container">
         <h1>Welcome to COLLEGE MANTRA 2024</h1>

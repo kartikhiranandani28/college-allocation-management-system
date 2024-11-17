@@ -416,12 +416,18 @@ footer a:hover {
       <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
     </ul>
   </nav>
-  
 
   <section class="section">
     <div class="container">
-      <h2>Welcome to College Mantra 2024</h2>
-      <p>Join the seat allocation process for IITs, NITs, and other top engineering institutes in India. Get all the latest updates and expert advice to make informed decisions for your college admissions.</p>
+      <h2>Latest Announcements</h2>
+      <div class="announcement">
+        <h4>Round 1 Seat Allocation Results Released!</h4>
+        <p>The seat allocation results for Round 1 are now available.</p>
+      </div>
+      <div class="announcement">
+        <h4>Round 2 Registration Now Open!</h4>
+        <p>Students who were not allocated seats in Round 1 can now register for Round 2.</p>
+      </div>
     </div>
   </section>
 
@@ -434,9 +440,9 @@ footer a:hover {
   
       <div class="footer-links">
         <ul>
-          <li><a href="">Privacy Policy</a></li>
-          <li><a href="">Terms & Conditions</a></li>
-          <li><a href="{% url 'cm_app:contact' %}">Contact Us</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/terms-conditions">Terms & Conditions</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
   
@@ -448,7 +454,12 @@ footer a:hover {
         </ul>
       </div>
     </div>
-  </footer>
+  
+    <div class="footer-bottom">
+      <p>Powered by College Mantra | Designed with ❤️</p>
+    </div>
+  </footer>  
+  
 
 </body>
 </html>
