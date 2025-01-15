@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import College  # Import College model
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 
 def is_college(user):
@@ -266,237 +268,50 @@ def show_college_allocation(request):
 
 
 # views.py
-
-
-@login_required(login_url='college_app:college_login')
-@college_required
-def update_seats1(request):
-    college_id = request.user.username
-
-    # SQL query to fetch seat matrix for a specific college
-    query = """
-        SELECT 
-            sm.College_ID, 
-            sm.Course_ID,  -- Added Course_ID here
-            c.College_Name,
-            co.Branch_Name,
-            co.Program_Name,
-            sm.General,
-            sm.General_PwD,
-            sm.OBC_NCL,
-            sm.OBC_NCL_PwD,
-            sm.SC,
-            sm.SC_PwD,
-            sm.ST,
-            sm.ST_PwD,
-            sm.Total_Seats,
-            sm.Allocated_Seats
-        FROM 
-            Seat_Matrix sm
-        JOIN 
-            College_Course cc ON sm.College_ID = cc.College_ID AND sm.Course_ID = cc.Course_ID
-        JOIN 
-            College c ON cc.College_ID = c.College_ID
-        JOIN 
-            Course co ON cc.Course_ID = co.Course_ID
-        WHERE 
-            c.College_ID = %s;
-    """
-
-    # Execute the query and fetch data
-    with connection.cursor() as cursor:
-        cursor.execute(query, [college_id])
-        rows = cursor.fetchall()
-
-    # Create a list of dictionaries to hold the data
-    update_seats = [
-        {
-            'id': row[0],
-            'course_id': row[1],  # Added course_id here
-            'college_name': row[2],
-            'branch_name': row[3],
-            'program_name': row[4],
-            'general': row[5],
-            'general_pwd': row[6],
-            'obc_ncl': row[7],
-            'obc_ncl_pwd': row[8],
-            'sc': row[9],
-            'sc_pwd': row[10],
-            'st': row[11],
-            'st_pwd': row[12],
-            'total_seats': row[13],
-            'allocated_seats': row[14],
-        }
-        for row in rows
-    ]
-
-    # Handle form submission for updating seat matrix
-    if request.method == 'POST':
-        try:
-            with connection.cursor() as cursor:
-                for course in update_seats:
-                    general = int(request.POST.get(f'general_{course["id"]}', 0))
-                    general_pwd = int(request.POST.get(f'general_pwd_{course["id"]}', 0))
-                    obc_ncl = int(request.POST.get(f'obc_ncl_{course["id"]}', 0))
-                    obc_ncl_pwd = int(request.POST.get(f'obc_ncl_pwd_{course["id"]}', 0))
-                    sc = int(request.POST.get(f'sc_{course["id"]}', 0))
-                    sc_pwd = int(request.POST.get(f'sc_pwd_{course["id"]}', 0))
-                    st = int(request.POST.get(f'st_{course["id"]}', 0))
-                    st_pwd = int(request.POST.get(f'st_pwd_{course["id"]}', 0))
-
-                    # Update the Seat_Matrix table
-                    cursor.execute("""
-                        UPDATE Seat_Matrix
-                        SET General = %s,
-                            General_PwD = %s,
-                            OBC_NCL = %s,
-                            OBC_NCL_PwD = %s,
-                            SC = %s,
-                            SC_PwD = %s,
-                            ST = %s,
-                            ST_PwD = %s
-                        WHERE College_ID = %s AND Course_ID = %s;  -- Added Course_ID condition
-                    """, (general, general_pwd, obc_ncl, obc_ncl_pwd, sc, sc_pwd, st, st_pwd, college_id, course['course_id']))
-
-            messages.success(request, "Seat matrix updated successfully.")
-            return redirect('update_seats')  # Redirect to the same page after submission
-        except Exception as e:
-            messages.error(request, f"An error occurred: {str(e)}")
-
-    # Render the template with the data
-    return render(request, "colleges/update_seats.html", {
-        "update_seats": update_seats,
-        "college_id": college_id,
-    })
-
-# @login_required(login_url='college_app:college_login')
-# @college_required
-# def update_seats(request):
-#     college_id = request.user.username
-
-#     # SQL query to fetch seat matrix for a specific college
-#     query = """
-#         SELECT 
-#             sm.College_ID, 
-#             c.College_Name,
-#             co.Branch_Name,
-#             co.Program_Name,
-#             sm.General,
-#             sm.General_PwD,
-#             sm.OBC_NCL,
-#             sm.OBC_NCL_PwD,
-#             sm.SC,
-#             sm.SC_PwD,
-#             sm.ST,
-#             sm.ST_PwD,
-#             sm.Total_Seats,
-#             sm.Allocated_Seats
-#         FROM 
-#             Seat_Matrix sm
-#         JOIN 
-#             College_Course cc ON sm.College_ID = cc.College_ID AND sm.Course_ID = cc.Course_ID
-#         JOIN 
-#             College c ON cc.College_ID = c.College_ID
-#         JOIN 
-#             Course co ON cc.Course_ID = co.Course_ID
-#         WHERE 
-#             c.College_ID = %s;
-#     """
-
-#     # Execute the query and fetch data
-#     with connection.cursor() as cursor:
-#         cursor.execute(query, [college_id])
-#         rows = cursor.fetchall()
-
-#     # Create a list of dictionaries to hold the data
-#     update_seats = [
-#         {
-#             'id': row[0],
-#             'college_name': row[1],
-#             'branch_name': row[2],
-#             'program_name': row[3],
-#             'general': row[4],
-#             'general_pwd': row[5],
-#             'obc_ncl': row[6],
-#             'obc_ncl_pwd': row[7],
-#             'sc': row[8],
-#             'sc_pwd': row[9],
-#             'st': row[10],
-#             'st_pwd': row[11],
-#             'total_seats': row[12],
-#             'allocated_seats': row[13],
-#         }
-#         for row in rows
-#     ]
-
-#     # Handle form submission for updating seat matrix
-#     if request.method == 'POST':
-#         try:
-#             with connection.cursor() as cursor:
-#                 for course in update_seats:
-#                     general = int(request.POST.get(f'general_{course["id"]}', 0))
-#                     general_pwd = int(request.POST.get(f'general_pwd_{course["id"]}', 0))
-#                     obc_ncl = int(request.POST.get(f'obc_ncl_{course["id"]}', 0))
-#                     obc_ncl_pwd = int(request.POST.get(f'obc_ncl_pwd_{course["id"]}', 0))
-#                     sc = int(request.POST.get(f'sc_{course["id"]}', 0))
-#                     sc_pwd = int(request.POST.get(f'sc_pwd_{course["id"]}', 0))
-#                     st = int(request.POST.get(f'st_{course["id"]}', 0))
-#                     st_pwd = int(request.POST.get(f'st_pwd_{course["id"]}', 0))
-
-#                     # Update the Seat_Matrix table
-#                     cursor.execute("""
-#                         UPDATE Seat_Matrix
-#                         SET General = %s,
-#                             General_PwD = %s,
-#                             OBC_NCL = %s,
-#                             OBC_NCL_PwD = %s,
-#                             SC = %s,
-#                             SC_PwD = %s,
-#                             ST = %s,
-#                             ST_PwD = %s
-#                         WHERE College_ID = %s;
-#                     """, (general, general_pwd, obc_ncl, obc_ncl_pwd, sc, sc_pwd, st, st_pwd, course['id']))
-
-#             messages.success(request, "Seat matrix updated successfully.")
-#             return redirect('update_seats')  # Redirect to the same page after submission
-#         except Exception as e:
-#             messages.error(request, f"An error occurred: {str(e)}")
-
-#     # Render the template with the data
-#     return render(request, "colleges/update_seats.html", {
-#         "update_seats": update_seats,
-#         "college_id": college_id,
-#     })
-
 def update_seats(request):
-    college_id = request.user.username
+    # Get the college_id from the logged-in user's username
+    username = request.user.username
+    college_id = username  # Create a function to get college_id from username
 
-    # SQL query to fetch seat matrix for a specific college
-    query = """
-        SELECT 
-            sm.College_ID, 
-            sm.Course_ID,  -- Added Course_ID here
-            c.College_Name,
-            co.Branch_Name,
-            co.Program_Name,
-            sm.General,
-            sm.General_PwD,
-            sm.OBC_NCL,
-            sm.OBC_NCL_PwD,
-            sm.SC,
-            sm.SC_PwD,
-            sm.ST,
-            sm.ST_PwD,
-            sm.Total_Seats,
-            sm.Allocated_Seats
-        FROM 
-            Seat_Matrix sm
-        JOIN 
-            College_Course cc ON sm.College_ID = cc.College_ID AND sm.Course_ID = cc.Course_ID
-        JOIN 
-            College c ON cc.College_ID = c.College_ID
-        JOIN 
-            Course co ON cc.Course_ID = co.Course_ID
-        WHERE 
-            c.College_ID = %s;
-    """
+    # Fetch current seat data for all courses of the given college
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT cc.Course_ID, c.Branch_Name, sm.General, sm.General_PwD, sm.OBC_NCL, sm.OBC_NCL_PwD, 
+                   sm.SC, sm.SC_PwD, sm.ST, sm.ST_PwD, sm.Total_Seats, sm.Allocated_Seats
+            FROM College_Course cc
+            JOIN Course c ON cc.Course_ID = c.Course_ID
+            JOIN Seat_Matrix sm ON cc.College_ID = sm.College_ID AND cc.Course_ID = sm.Course_ID
+            WHERE cc.College_ID = %s
+        """, [college_id])
+        courses = cursor.fetchall()
+         
+        print(courses)
+    if request.method == 'POST':
+        # If POST request, update the seat numbers
+        for course in courses:
+            course_id = course[0]
+            # Assuming the form will send updated seat data like 'general', 'obc', etc.
+            general_seat = request.POST.get(f'general_{course_id}')
+            general_pwd_seat = request.POST.get(f'general_pwd_{course_id}')
+            obc_seat = request.POST.get(f'obc_{course_id}')
+            obc_pwd_seat = request.POST.get(f'obc_pwd_{course_id}')
+            sc_seat = request.POST.get(f'sc_{course_id}')
+            sc_pwd_seat = request.POST.get(f'sc_pwd_{course_id}')
+            st_seat = request.POST.get(f'st_{course_id}')
+            st_pwd_seat = request.POST.get(f'st_pwd_{course_id}')
+            total_seat = request.POST.get(f'total_{course_id}')
+            
+            # Update the seat values
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    UPDATE Seat_Matrix
+                    SET General = %s, General_PwD = %s, OBC_NCL = %s, OBC_NCL_PwD = %s, 
+                        SC = %s, SC_PwD = %s, ST = %s, ST_PwD = %s, Total_Seats = %s
+                    WHERE College_ID = %s AND Course_ID = %s
+                """, [general_seat, general_pwd_seat, obc_seat, obc_pwd_seat, sc_seat, sc_pwd_seat, 
+                      st_seat, st_pwd_seat, total_seat, college_id, course_id])
+        
+        return redirect(reverse('college_app:update_seats'))  # Redirect after updating the seats (you can define your success URL)
+
+    # Render a template that shows current seat data and form for updating
+    return render(request, 'colleges/update_seats.html', {'courses': courses})

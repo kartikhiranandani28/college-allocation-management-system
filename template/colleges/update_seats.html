@@ -18,7 +18,7 @@ body {
 
 /* Container Styles */
 .container {
-    max-width: 1200px;
+    max-width: 1250px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff; /* White background for contrast */
@@ -123,6 +123,8 @@ input[type="number"]:focus {
 /* Button Styles */
 button[type="submit"] {
     background-color: #2563EB;
+    display:flex;
+    justify-content: center;
     color: #fff;
     padding: 12px 24px;
     border-radius: 5px;
@@ -185,22 +187,23 @@ button[type="submit"]:hover {
                         <th>SC PwD</th>
                         <th>ST</th>
                         <th>ST PwD</th>
+                        <th>Total Seats</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for seat in update_seats %}
-                        <tr>
-                            <td>{{ seat.program_name }} ({{ seat.branch_name }})</td>
-                            <td><input type="number" name="general_{{ seat.id }}" value="{{ seat.general }}" min="0"></td>
-                            <td><input type="number" name="general_pwd_{{ seat.id }}" value="{{ seat.general_pwd }}" min="0"></td>
-                            <td><input type="number" name="obc_ncl_{{ seat.id }}" value="{{ seat.obc_ncl }}" min="0"></td>
-                            <td><input type="number" name="obc_ncl_pwd_{{ seat.id }}" value="{{ seat.obc_ncl_pwd }}" min="0"></td>
-                            <td><input type="number" name="sc_{{ seat.id }}" value="{{ seat.sc }}" min="0"></td>
-                            <td><input type="number" name="sc_pwd_{{ seat.id }}" value="{{ seat.sc_pwd }}" min="0"></td>
-                            <td><input type="number" name="st_{{ seat.id }}" value="{{ seat.st }}" min="0"></td>
-                            <td><input type="number" name="st_pwd_{{ seat.id }}" value="{{ seat.st_pwd }}" min="0"></td>
-                            <td>{{ seat.total_seats }}</td>  <!-- Displaying Total Seats -->
-                        </tr>
+                    {% for course in courses %}
+                    <tr>
+                        <td>{{ course.1 }}</td>
+                        <td><input type="number" name="general_{{ course.0 }}" value="{{ course.2 }}"></td>
+                        <td><input type="number" name="general_pwd_{{ course.0 }}" value="{{ course.3 }}"></td>
+                        <td><input type="number" name="obc_{{ course.0 }}" value="{{ course.4 }}"></td>
+                        <td><input type="number" name="obc_pwd_{{ course.0 }}" value="{{ course.5 }}"></td>
+                        <td><input type="number" name="sc_{{ course.0 }}" value="{{ course.6 }}"></td>
+                        <td><input type="number" name="sc_pwd_{{ course.0 }}" value="{{ course.7 }}"></td>
+                        <td><input type="number" name="st_{{ course.0 }}" value="{{ course.8 }}"></td>
+                        <td><input type="number" name="st_pwd_{{ course.0 }}" value="{{ course.9 }}"></td>
+                        <td><input type="number" name="total_{{ course.0 }}" value="{{ course.10 }}"></td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -208,4 +211,4 @@ button[type="submit"]:hover {
         </form>
     </div>
 </body>
-</html> -->
+</html> 
