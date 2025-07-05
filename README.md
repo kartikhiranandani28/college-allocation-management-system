@@ -40,7 +40,7 @@ Authentication: Django built-in authentication
 
 
 
-Homepage https://github.com/user-attachments/assets/393ab387-ced9-4f6f-a311-d31de99de174
+Homepage (https://github.com/user-attachments/assets/393ab387-ced9-4f6f-a311-d31de99de174)
 
 
 Student Dashboard (Add Preferences) (https://github.com/user-attachments/assets/aaa97842-9077-4957-aca1-23047225160c)
